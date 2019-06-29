@@ -21,12 +21,14 @@
             <el-row type="flex" align="middle">
 
                 <!-- 如果用户存在则展示用户信息，用户数据来自store -->
-                <el-dropdown v-if="false">
+                <el-dropdown v-if="$store.state.user.userInfo.token">
                     <el-row type="flex" align="middle" class="el-dropdown-link">
                         <nuxt-link to="#">
-                            <img src="http://157.122.54.189:9093/images/pic_sea.jpeg"/>
-                            用户名
+                            <img :src="$axios.defaults.baseURL+
+                            $store.state.user.userInfo.user.defaultAvatar"/>
+                             <span>{{$store.state.user.userInfo.user.nickname}}</span>
                         </nuxt-link>
+                       
                         <i class="el-icon-caret-bottom el-icon--right"></i>
                     </el-row>
                     <el-dropdown-menu slot="dropdown">
@@ -53,6 +55,11 @@
 export default {
      mounted(){
    this.$store.state.user.userInfo.userName
+  },
+  methods:{
+      handleLogout(){
+        this.$store.commit('user/clearUserInfo')
+      }
   }
 }
 </script>
